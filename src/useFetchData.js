@@ -1,36 +1,9 @@
-function getSuspender(promise) {
-  let status = "pending";
-  let response;
+async function fetchData() {
+  let num = Math.ceil(Math.random() * 224);
 
-  const suspender = promise.then(
-    (res) => {
-      status = "success";
-      response = res;
-    },
-    (err) => {
-      status = "error";
-      response = err;
-    }
-  );
-
-  const read = () => {
-    switch (status) {
-      case "pending":
-        throw suspender;
-      case "error":
-        throw response;
-      default:
-        return response;
-    }
-  };
-
-  return { read };
+  const url = `https://api.adviceslip.com/advice/${num}`;
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
 }
-
-export default function fetchData(url) {
-  const promise = fetch(url)
-    .then((response) => response.json())
-    .then((data) => data.slip);
-
-  return getSuspender(promise);
-}
+export default fetchData;
