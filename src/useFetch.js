@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+// const url = "https://api.adviceslip.com/advice";
 
 export default function useFetch(url) {
   const [data, setData] = useState([]);
